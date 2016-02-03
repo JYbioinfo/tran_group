@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* CSS Document */
+/*共用*/
+body{font-family:"Microsoft Yahei","微软雅黑","宋体",Arial, Helvetica, sans-serif; font-size:14px;}
+.clear{clear: both;}
+.width78{width:78%;}
+.width10{width: 10%;}
+.width40{width: 40%;}
+.fontRed{color: #f00;}
+.mTop{margin-top: 15px;}
+.top10{padding-top: 10px;}
+.bottom20{padding-bottom: 20px;}
+.list,.translate{padding-top: 50px;}
+a,a:hover,a:visited{color:#333; text-decoration: none;}
+/*登陆页*/
+.form-signin {margin: 0 auto;max-width: 350px;padding:50px 0;}
+.sign-group label{width:20%;text-align: right;}
+.sign-group input{display: inline-block;}
+.remeber{padding-left:76px;}
+/*翻译页*/
+.translate th{text-align: right;}
+.translate textarea {height: auto;width: 505px !important;line-height: 28px;}
+.translate textarea.name-text{max-height: 100px;min-height:200px !important;}
+/*.translate textarea.desc-text{max-height: 1000px;min-height:2000px !important;}*/
+.translate textarea.desc-text{height: 1500px !important;overflow-y: scroll;}
+.translate button{font-size:16px;padding:10px 60px;margin-right: 50px;}
+.translate-btn{padding-left:320px !important;}
+.score{margin-right: 10px;margin-top:5px;}
+.desc-div{height: 1500px;overflow-y: scroll; line-height: 28px;}

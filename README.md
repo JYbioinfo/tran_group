@@ -1,1 +1,2 @@
-# tran_group
+# tran_web
+bioinfo translation system

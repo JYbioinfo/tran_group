@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>结果列表页</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}"><!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap-theme.min.css') }}"> <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}"><!-- css主文件 -->
+</head>
+
+<body>
+<!-- 结果列表页 start -->
+<div class="container">
+    <button class="btn btn-success pull-right mTop" onclick="window.location.href='/logout'">退出系统</button>
+    <div class="clear list">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active"><a href="#home" data-toggle="tab">已保存</a></li>
+            <li><a href="#distr" data-toggle="tab">未翻译</a></li>
+            <li><a href="#subm" data-toggle="tab">已提交</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <!--已保存部分 start -->
+            <div class="top10 tab-pane fade in active" id="home">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th class="width10" scope="col">疾病编号</th>
+                        <th class="width40" scope="col">疾病名称</th>
+                        <th class="width40" scope="col">疾病中文名称</th>
+                        <th class="width10 text-center" scope="col">状态查看</th>
+                    </tr>
+                    {% for item in save_list %}
+                        <tr>
+                            <td>{{ item["disease_id"] }}</td>
+                            <td>{{ item["disease_name"] }}</td>
+                            <td>{{ item["disease_name_zn"] }}</td>
+                            <td class="text-center"><a href="/tasks/{{ item['sys_no'] }}" title="">查看详情</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <!--已保存部分 end -->
+
+            <!-- 未翻译部分 start -->
+            <div class="top10 tab-pane fade" id="distr">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th class="width10" scope="col">疾病编号</th>
+                        <th class="width40" scope="col">疾病名称</th>
+                        <th class="width40" scope="col">疾病中文名称</th>
+                        <th class="width10 text-center" scope="col">状态查看</th>
+                    </tr>
+                    {% for item in task_list %}
+                        <tr>
+                            <td>{{ item["disease_id"] }}</td>
+                            <td>{{ item["disease_name"] }}</td>
+                            <td>{{ item["disease_name_zn"] }}</td>
+                            <td class="text-center"><a href="/tasks/{{ item['sys_no'] }}" title="">查看详情</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <!-- 未翻译部分 end -->
+
+            <!-- 已提交部分 start -->
+            <div class="top10 tab-pane fade" id="subm">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th class="width10" scope="col">疾病编号</th>
+                        <th class="width40" scope="col">疾病名称</th>
+                        <th class="width40" scope="col">疾病中文名称</th>
+                        <th class="width10 text-center" scope="col">状态查看</th>
+                    </tr>
+                    {% for item in submit_list %}
+                        <tr>
+                            <td>{{ item["disease_id"] }}</td>
+                            <td>{{ item["disease_name"] }}</td>
+                            <td>{{ item["disease_name_zn"] }}</td>
+                            <td class="text-center"><a href="/tasks/{{ item['sys_no'] }}" title="">查看详情</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <!-- 已提交部分 end -->
+
+        </div>
+    </div>
+</div>
+<!-- 结果列表页 end -->
+<script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static',filename='js/tasklist.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>翻译页</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}"> <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap-theme.min.css')}}"><!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}"> <!-- css主文件 -->
+</head>
+
+<body>
+<!-- 翻译页 start -->
+<div class="container">
+    {% if role == 1 %}
+    <button class="btn btn-info pull-right mTop" onclick="window.location.href='/tasks'">返回列表</button>
+    {% else %}
+    <button class="btn btn-info pull-right mTop" onclick="window.location.href='/marks'">返回列表</button>
+    {% endif %}
+    <div class="clear translate bottom20">
+        <p class="fontRed">温馨提示：在编辑过程中请不要刷新页面，请及时保存。</p>
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th scope="row" width="8%">疾病编号：</th>
+                <td width="46%">{{ info["disease_id"] }}</td>
+                <td width="46%"></td>
+            </tr>
+            <tr>
+                <th scope="row">疾病名称：</th>
+                <td>{{info["disease_name"]}}</td>
+                <td><textarea class="form-control name-text" id="name_zh" name="" cols="" rows="">{{info["disease_name_zn"]}}</textarea></td>
+            </tr>
+            <tr>
+                <th scope="row">疾病描述：</th>
+                <td><div class="desc-div"> {{info["text"]|safe}}</div></td>
+                <td><textarea class="form-control desc-text" id="text_zh" name="" cols="" rows="">{{info["text_zn"]}}</textarea>
+                </td>
+            </tr>
+            {% if role == 1 %}
+            <tr>
+                <td class="translate-btn" colspan="3" scope="row">
+
+                    <button class="btn btn-info" onclick="update(2,{{info['sys_no']}})">保存</button>
+                    <button class="btn btn-success" onclick="update(3,{{info['sys_no']}})">提交</button>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <th scope="row">打分：</th>
+                <td colspan="2">
+                    <select class="form-control width10 pull-left score" id="mark_select">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                    <button class="btn btn-success" onclick="mark({{info['sys_no']}})">确认</button>
+                </td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+</div>
+<!-- 翻译页 end -->
+<script src="{{url_for('static',filename='js/taskdetail.js')}}"></script>
+</body>
+</html>
