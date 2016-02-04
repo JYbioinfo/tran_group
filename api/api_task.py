@@ -187,7 +187,7 @@ def next_group(group_no):
             return json.dumps({"status":"user not exit"})
 
         # 标记为完成 group_status = 6
-        update_sql1 = "UPDATE group_disease SET group_satatus = %d WHERE " \
+        update_sql1 = "UPDATE group_disease SET group_status = %d WHERE " \
                           "group_no = %d;" % (6,group_no)
         re2 = db.execute(update_sql1)
         return json.dumps({"status":001})

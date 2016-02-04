@@ -64,8 +64,10 @@ def get_task_list():
         return redirect("/marks")
     data = json.dumps({"account": account, "password": pw})
     result = json.loads(requests.get(API_service+"/api/tasks/list/", data=data).text)
-    return render_template(list_html, task_list=result["data"]["new_get"], save_list=result["data"]["saved"],
-                           submit_list=result["data"]["commit"])
+    for result1 in result["data"]:
+        group_no = result1["group_no"]
+    return render_template(list_html, save_list=result["data"], group_no=group_no)
+    # return render_template(list_html)
 
 
 @list_view.route("/marks", methods=["GET", "PUT"])
@@ -157,6 +159,30 @@ def tran_mark(sys_no):
             return redirect("/marks/%d" % sys_no)
         else:
             return redirect("/marks")
+
+
+@list_view.route("/examine/<int:sys_no>/", methods=["PUT"])
+@login_required
+def examine_mark(sys_no):
+    postdata = {}
+    postdata["account"] = current_user.account
+    postdata["password"] = current_user.passwd_enc
+    postdata["flag"] = 4
+    postdata["score"] = request.form.get("mark", "0")
+    result = json.loads(requests.put(API_service+"/api/tasks/%d/" % sys_no, data=json.dumps(postdata)).text)
+    return json.dumps(result)
+
+
+@list_view.route("/next/<int:group_no>/", methods=["PUT"])
+@login_required
+def next_mark(group_no):
+    postdata = {}
+    postdata["account"] = current_user.account
+    postdata["password"] = current_user.passwd_enc
+    postdata["flag"] = 4
+    postdata["score"] = request.form.get("mark", "0")
+    result = json.loads(requests.put(API_service+"/api/tasks/group/%d/" % group_no, data=json.dumps(postdata)).text)
+    return json.dumps(result)
 
 
 

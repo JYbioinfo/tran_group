@@ -14,9 +14,9 @@
     <button class="btn btn-success pull-right mTop" onclick="window.location.href='/logout'">退出系统</button>
     <div class="clear list">
         <ul id="myTab" class="nav nav-tabs">
-            <li class="active"><a href="#home" data-toggle="tab">已保存</a></li>
-            <li><a href="#distr" data-toggle="tab">未翻译</a></li>
-            <li><a href="#subm" data-toggle="tab">已提交</a></li>
+            <li class="btn btn-default" style="float:right !important;" onclick="next_group('{{ group_no }}')">下一组</li>
+            <li class="active"><a href="#home" data-toggle="tab">查重</a></li>
+
         </ul>
         <div id="myTabContent" class="tab-content">
             <!--已保存部分 start -->
@@ -25,66 +25,62 @@
                     <tr>
                         <th class="width10" scope="col">疾病编号</th>
                         <th class="width40" scope="col">疾病名称</th>
-                        <th class="width40" scope="col">疾病中文名称</th>
-                        <th class="width10 text-center" scope="col">状态查看</th>
+                        <th class="width40 text-center" scope="col">点击查看正文</th>
+                        <th class="width10 text-center" scope="col">标记为重复</th>
                     </tr>
                     {% for item in save_list %}
                         <tr>
-                            <td>{{ item["disease_id"] }}</td>
-                            <td>{{ item["disease_name"] }}</td>
-                            <td>{{ item["disease_name_zn"] }}</td>
-                            <td class="text-center"><a href="/tasks/{{ item['sys_no'] }}" title="">查看详情</a></td>
+                            <td>{{ item["disease_no"] }}</td>
+                            <td>{{ item["dissease_name"] }}</td>
+                            <td id="text_{{ loop.index }}" style="display:none;">{{ item["text"] }}</td>
+                            <td class="text-center"><a onclick='test_1("{{ loop.index }}")'>查看详情</a></td>
+                            <td class="text-center"><a onclick="examine('{{ item['sys_no'] }}')" title="">{% if item["status"]==9 %}已标记
+                            {% else %}
+                                标记
+                            {% endif %}</a></td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
             <!--已保存部分 end -->
-
-            <!-- 未翻译部分 start -->
-            <div class="top10 tab-pane fade" id="distr">
-                <table class="table table-bordered table-hover">
-                    <tr>
-                        <th class="width10" scope="col">疾病编号</th>
-                        <th class="width40" scope="col">疾病名称</th>
-                        <th class="width40" scope="col">疾病中文名称</th>
-                        <th class="width10 text-center" scope="col">状态查看</th>
-                    </tr>
-                    {% for item in task_list %}
-                        <tr>
-                            <td>{{ item["disease_id"] }}</td>
-                            <td>{{ item["disease_name"] }}</td>
-                            <td>{{ item["disease_name_zn"] }}</td>
-                            <td class="text-center"><a href="/tasks/{{ item['sys_no'] }}" title="">查看详情</a></td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <!-- 未翻译部分 end -->
-
-            <!-- 已提交部分 start -->
-            <div class="top10 tab-pane fade" id="subm">
-                <table class="table table-bordered table-hover">
-                    <tr>
-                        <th class="width10" scope="col">疾病编号</th>
-                        <th class="width40" scope="col">疾病名称</th>
-                        <th class="width40" scope="col">疾病中文名称</th>
-                        <th class="width10 text-center" scope="col">状态查看</th>
-                    </tr>
-                    {% for item in submit_list %}
-                        <tr>
-                            <td>{{ item["disease_id"] }}</td>
-                            <td>{{ item["disease_name"] }}</td>
-                            <td>{{ item["disease_name_zn"] }}</td>
-                            <td class="text-center"><a href="/tasks/{{ item['sys_no'] }}" title="">查看详情</a></td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-            <!-- 已提交部分 end -->
-
         </div>
     </div>
 </div>
+<script>
+    function test_1(int){
+        var text = $("#text_"+int).html();
+        alert(text)
+    }
+    function examine(sys_no){
+        m_url = "/examine/"+sys_no+"/"
+        $.ajax({
+        url: m_url,
+        type: "PUT",
+        async: true,
+        success: function (data) {
+            window.location.href="";
+        },
+        error:function(xhr){
+            sweetAlert("Check Fail:" + xhr.statusText + xhr.status);
+        }
+    });
+    }
+    function next_group(group_no){
+        m_url = "/next/"+group_no+"/"
+        $.ajax({
+        url: m_url,
+        type: "PUT",
+        async: true,
+        success: function (data) {
+            window.location.href="";
+        },
+        error:function(xhr){
+            sweetAlert("Check Fail:" + xhr.statusText + xhr.status);
+        }
+    });
+
+    }
+</script>
 <!-- 结果列表页 end -->
 <script src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
 <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
