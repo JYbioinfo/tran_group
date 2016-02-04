@@ -182,7 +182,6 @@ def next_mark(group_no):
     postdata["flag"] = 4
     postdata["score"] = request.form.get("mark", "0")
     result = json.loads(requests.put(API_service+"/api/tasks/group/%d/" % group_no, data=json.dumps(postdata)).text)
-    print result
     return json.dumps(result)
 
 
