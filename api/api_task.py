@@ -63,7 +63,7 @@ def task_list_get():
         group_no = db.fetchone()[0]
 
 
-        select_sql_2 = "SELECT sys_no,disease_no,group_no,dissease_name,text,status FROM group_disease " \
+        select_sql_2 = "SELECT sys_no,disease_no,group_no,disease_name,text,status FROM group_disease " \
                     "WHERE group_no = '%s';" % group_no
         db.execute(select_sql_2)
         result = db.fetchall()
